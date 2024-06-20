@@ -1,7 +1,7 @@
 export class CreateUserDto {
-    username: "string";
-    email: "string";
-    passwordHash: "string";
-    createdAt: "Date";
-    updatedAt: "Date";
-}
+    username: string;
+    email: string;
+    passwordHash: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }

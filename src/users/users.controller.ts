@@ -13,8 +13,9 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  async findAll() {
+    const users = await this.usersService.findAll();
+    return users;
   }
 
   @Get(':id')

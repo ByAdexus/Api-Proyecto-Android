@@ -1,12 +1,13 @@
 export class CreateTaskDto {
     
-userId: "number"
-title: "string"
-description: "string"
-dueDate: "date"
-priority: "string"
-status: "string"
-createdAt: "date"
-updatedAt: "date"
-categoryId: "number"
+userId: string;
+title: string;
+description: string;
+dueDate: Date;
+priority: string;
+status: string;
+createdAt: Date;
+updatedAt: Date;
+categoryId: string;
+
 }
