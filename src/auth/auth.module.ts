@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './local.strategy';
@@ -7,8 +7,8 @@ import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
+    forwardRef(() => UsersModule),
     PassportModule.register({ session: true }), // Habilita el uso de sesiones en Passport
-    UsersModule,
   ],
   providers: [AuthService, LocalStrategy],
   controllers: [AuthController],
