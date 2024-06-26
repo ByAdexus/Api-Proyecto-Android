@@ -5,10 +5,10 @@ export class UpdateTaskDto extends PartialType(CreateTaskDto) {
     userId?: string;
   title?: string;
   description?: string;
-  dueDate?: Date;
+  dueDate?: string;
   priority?: string;
   status?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
   categoryId?: string;
 }
