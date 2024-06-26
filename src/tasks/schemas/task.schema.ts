@@ -13,7 +13,7 @@ export class Task extends Document {
   description: string;
 
   @Prop({ required: true })
-  dueDate: Date;
+  dueDate: string;
 
   @Prop({ required: true })
   priority: string;
@@ -22,10 +22,10 @@ export class Task extends Document {
   status: string;
 
   @Prop({ required: true })
-  createdAt: Date;
+  createdAt: string;
 
   @Prop({ required: true })
-  updatedAt: Date;
+  updatedAt: string;
 
   @Prop({ required: true })
   categoryId: string;
