@@ -1,7 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-@Schema()
+@Schema({
+  timestamps: true // Esto añade automáticamente `createdAt` y `updatedAt`
+})
 export class User extends Document {
   @Prop({ required: true })
   username: string;
@@ -11,12 +13,6 @@ export class User extends Document {
 
   @Prop({ required: true })
   passwordHash: string;
-
-  @Prop({ required: true })
-  createdAt: Date;
-
-  @Prop({ required: true })
-  updatedAt: Date;
 }
 
 export type UserDocument = User & Document;

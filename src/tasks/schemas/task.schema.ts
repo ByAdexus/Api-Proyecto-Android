@@ -12,8 +12,8 @@ export class Task extends Document {
   @Prop({ required: true })
   description: string;
 
-  @Prop({ required: true })
-  dueDate: string;
+  @Prop({ required: true, type: Date })  // Cambiado a Date
+  dueDate: Date;
 
   @Prop({ required: true })
   priority: string;
@@ -21,11 +21,11 @@ export class Task extends Document {
   @Prop({ required: true })
   status: string;
 
-  @Prop({ required: true })
-  createdAt: string;
+  @Prop({ required: true, type: Date })  // Cambiado a Date
+  createdAt: Date;
 
-  @Prop({ required: true })
-  updatedAt: string;
+  @Prop({ required: true, type: Date })  // Cambiado a Date
+  updatedAt: Date;
 
   @Prop({ required: true })
   categoryId: string;

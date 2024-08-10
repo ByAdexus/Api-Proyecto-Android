@@ -10,12 +10,19 @@ export class TasksService {
   constructor(@InjectModel(Task.name) private taskModel: Model<TaskDocument>) {}
 
   create(createTaskDto: CreateTaskDto) {
-    return this.taskModel.create(createTaskDto);
+    // Convertir cadenas de fecha a objetos Date
+    const taskData = {
+      ...createTaskDto,
+      dueDate: new Date(createTaskDto.dueDate),
+      createdAt: new Date(createTaskDto.createdAt),
+      updatedAt: new Date(createTaskDto.updatedAt),
+    };
+    return this.taskModel.create(taskData);
   }
 
   async findAll() {
-    const task = await this.taskModel.find();
-    return task;
+    const tasks = await this.taskModel.find().exec();
+    return tasks;
   }
 
   findOne(id: string): Promise<Task> {
@@ -23,11 +30,19 @@ export class TasksService {
   }
 
   async update(id: string, updateTaskDto: UpdateTaskDto): Promise<Task> {
+    // Convertir cadenas de fecha a objetos Date
+    const updatedData = {
+      ...updateTaskDto,
+      dueDate: updateTaskDto.dueDate ? new Date(updateTaskDto.dueDate) : undefined,
+      createdAt: updateTaskDto.createdAt ? new Date(updateTaskDto.createdAt) : undefined,
+      updatedAt: new Date(), // Actualizar siempre a la fecha actual
+    };
+
     const existingTask = await this.taskModel.findByIdAndUpdate(
       id, 
-      updateTaskDto,
+      updatedData,
       { new: true } // Return the modified document
-    );
+    ).exec();
 
     if (!existingTask) {
       throw new NotFoundException(`Task with id ${id} not found`);
@@ -38,6 +53,9 @@ export class TasksService {
 
   async remove(id: string): Promise<Task> {
     const deletedTask = await this.taskModel.findByIdAndDelete(id).exec();
+    if (!deletedTask) {
+      throw new NotFoundException(`Task with id ${id} not found`);
+    }
     return deletedTask;
   }
 }

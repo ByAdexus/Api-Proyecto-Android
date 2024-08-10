@@ -1,5 +1,7 @@
+// src/users/users.service.ts
 import { Injectable, NotFoundException, UnauthorizedException, Inject, forwardRef } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
+import { RegisterUserDto } from './dto/register-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.schema';
@@ -21,6 +23,15 @@ export class UsersService {
     const hashedPassword = await bcrypt.hash(createUserDto.passwordHash, 10);
     const createdUser = new this.userModel({
       ...createUserDto,
+      passwordHash: hashedPassword,
+    });
+    return createdUser.save();
+  }
+
+  async register(registerUserDto: RegisterUserDto): Promise<User> {
+    const hashedPassword = await bcrypt.hash(registerUserDto.password, 10);
+    const createdUser = new this.userModel({
+      ...registerUserDto,
       passwordHash: hashedPassword,
     });
     return createdUser.save();
@@ -50,8 +61,6 @@ export class UsersService {
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userModel.findOne({ username }).exec();
-    console.log(user);
-    
     if (user && await bcrypt.compare(password, user.passwordHash)) {
       return user;
     }
